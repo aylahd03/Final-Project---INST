@@ -1,3 +1,5 @@
-README for INST 126 Final Project
+INST 126 Final Project
 
-This program is designed to 
+This program utilizes the NASA Near Earth Object API and Pandas to create a dataframe of asteroids and their closest approach date to Earth. The data is pulled from a 7 day window that the user must specify in the api url(start_date=YOUR START DATE and end_date=7 DAYS LATER). The user must also obtain an api key from NASA to access the data; the key should also be embedded in the api url (api_key=YOUR API KEY). 
+
+This program uses pandas, requests, and json. Requests is used to pull the data from the api and ensures that the request was sucessful(line 14 checks that status code = 200) If the request was unsucessful the program will give you a numerical error. Json then formats the data so that it can be turned into a dataframe using pandas which is what will appear in the terminal. 
