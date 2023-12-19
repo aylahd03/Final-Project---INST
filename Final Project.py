@@ -1,36 +1,35 @@
 # Final Project
 
-import openaq
+import requests
 import pandas as pd
-import matplotlib as plt
 
-def openaq_data(api_key, city, parameter, date_from, date_to):
-    aq_data = openaq.OpenAQ(api_key=api_key)
-    
-    #Getting the measurements we want from the api
-    measurements = aq_data.measurements(city=city, parameter=parameter, date_form=date_from, date_to=date_to)
-    
-    # pulling the data we want to use in our visualization
-    data = []
-    for result in measurements['results']:
-        row = {
-            'date': result['date']['utc'],
-            'value': result['value'],
-            'unit': result['unit']  
-        }
-        data.append(row) 
-   
-    # Creating a data frame from what we've pulled
-    data_frame = pd.DataFrame(data)
-    data_frame['date'] = pd.to.datetime(data_frame['date'])
-    
-    return data_frame
+def fetch_user_data():
+    api_url = 'https://api.nasa.gov/neo/rest/v1/feed?start_date=2023-01-01&end_date=2023-01-07&api_key=vCxBiACkHus3CsVjMd4q98zYTVnTKAUflCB1PQ2z'
 
+    # Make a request to the API
+    response = requests.get(api_url)
 
+    # Check if the request was successful (status code 200)
+    if response.status_code == 200:
+        # Parse JSON data from the response
+        data = response.json()
 
+        # Create a Pandas DataFrame from the API response
+        df = pd.DataFrame(data)
+        return df
+    else:
+        print(f"Error: {response.status_code}")
+        return None
 
+def main():
+    # Fetch user data from the API
+    user_data = fetch_user_data()
 
+    if user_data is not None:
+        # Display the DataFrame
+        print(user_data)
 
+        # Optionally, perform additional analysis or visualization here
 
-
-
+if __name__ == "__main__":
+    main()
