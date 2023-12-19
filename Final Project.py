@@ -12,13 +12,21 @@ def openaq_data(api_key, city, parameter, date_from, date_to):
     
     # pulling the data we want to use in our visualization
     data = []
-    for result in measurements ['results']:
+    for result in measurements['results']:
         row = {
             'date': result['date']['utc'],
             'value': result['value'],
             'unit': result['unit']  
         }
-        data.appen(row) 
+        data.append(row) 
+   
+    # Creating a data frame from what we've pulled
+    data_frame = pd.DataFrame(data)
+    data_frame['date'] = pd.to.datetime(data_frame['date'])
+    
+    return data_frame
+
+
 
 
 
